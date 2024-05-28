@@ -18,6 +18,21 @@ app.get("/carros", (req, res) => {
     });
 });
 
+//Escrita
+app.post("/carros", (req,res)=>{
+    const {marca, modelo} = req.body;
+    sql.query(
+        connectionString,
+        `INSERT INTO carros VALUES ('${marca}', '${modelo}')`,(erro,rows)=>{
+            if(erro){
+                res.status(500).json("Erro interno de Servidor");
+            } else{
+                res.status(200).json("Cadastrado com sucesso");
+            }
+        }
+    )
+})
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
